@@ -23,6 +23,17 @@ Each success opens a learning dialogue showing the concept, what happened in thi
 | 7 Raised bank | Right bank 0.75 m higher | 200 kg | Fixed bridge |
 | 8 Rock anchors | Uneven ground anchors, both carry load | 350 kg | Fixed bridge |
 | 9 Mixed materials | Shallow anchors, budget $200 | 550 kg | Fixed bridge |
+| Expert 1 Strength without excess | Two truss joints, one 50 kg counterweight, budget $285 | 650 kg | 5.25 kN·m |
+| Expert 2 Uneven foundations | 0.5 m uphill road, two uneven rock anchors, budget $248 | 700 kg | Fixed bridge |
+| Expert 3 Final balancing act | Unequal truss heights, one 50 kg counterweight, budget $365 | 800 kg | 6.55 kN·m |
+
+## Expert extensions
+
+The mission picker separates the nine core missions from three Expert Extensions. Completing core mission 9 offers **Enter expert extensions**. Each extension starts with an empty workbench and displays a persistent Expert Extension banner plus its geometry and component limits. All materials are unlocked, while counterweights remain available only on lifting bridges.
+
+Expert 1 combines a heavy car, sparse truss joints, selective metal upgrades and a limited drive. Expert 2 combines a sloping road, unequal rock supports and selective deck reinforcement; both anchors must actually carry load. Expert 3 combines an asymmetric truss, mixed wood and metal, selective road reinforcement, counterweight position and a fixed torque limit. The final extension tests strength and lifting separately.
+
+Budgets are hard placement and upgrade limits. The drive rating and car mass cannot be changed. Each lifting extension allows at most one 50 kg counterweight. The fixed extension has no lifting test. Reference designs have been checked within every limit; cheap all-wood shortcuts fail, and reference lifting designs with the nearer counterweight carry the car but fail to open. Reference designs are evidence of playability, not restrictions on alternative solutions.
 
 The heavier-car mission is easier than the previous revision: load reduced from 350 kg to 220 kg at the new scale, budget increased from $285 to $310, a higher-output drive, and reinforced road available as an alternative way to control bending. An unsupported long road still fails.
 
