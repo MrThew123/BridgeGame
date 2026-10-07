@@ -1,6 +1,6 @@
 # Techquity Bridge Lab
 
-Open `index.html` in a modern browser. The game is self-contained and works offline. The interface uses Techquity purple (#5a108f) and the actual logo from the electronics site, with a mission selector, contextual parts and separate test bar.
+Open `index.html` in a modern browser. Keep the bundle together to play offline, including the menu artwork and logo. The interface uses Techquity purple (#5a108f) and the actual logo from the electronics site, with an illustrated title menu, three chapter tabs, completion badges, contextual parts and separate test bar.
 
 ## Building and testing
 
@@ -26,6 +26,15 @@ Each success opens a learning dialogue showing the concept, what happened in thi
 | Expert 1 Strength without excess | Two truss joints, one 50 kg counterweight, budget $285 | 650 kg | 5.25 kN·m |
 | Expert 2 Uneven foundations | 0.5 m uphill road, two uneven rock anchors, budget $248 | 700 kg | Fixed bridge |
 | Expert 3 Final balancing act | Unequal truss heights, one 50 kg counterweight, budget $365 | 800 kg | 6.55 kN·m |
+| 13 Crash lab · Near the finish | Observe a late collapse, then repair within $225 | 450 kg | Fixed bridge |
+
+## Crash lab and menus
+
+A title screen offers Play/Continue and Choose a level. The picker groups nine Core missions, three Expert extensions and one final Crash lab. Progress is saved in this browser; choosing a card starts a fresh design.
+
+Mission 13, Near the finish, provides a deliberately weak starter bridge. Students must observe its failure before editing: a 450 kg car reaches the far half, the far timber support snaps, and the car falls with forward momentum and splashes into the river. A dialogue connects the changing load path to the consequence, then unlocks repair. Both uneven rock anchors must carry load and the repaired bridge must fit $225. Upgrading the weak support to metal yields a checked $218.30 solution. Alternative designs are allowed.
+
+Crash trajectories illustrate consequences rather than simulate vehicle damage or collision mechanics. A front axle already on the far bank strands and tips the car; a car wholly clear of the span stays safe.
 
 ## Expert extensions
 
@@ -57,10 +66,14 @@ Pause and playback speed affect the test. Edit preserves the design. Arrow keys 
 
 ## Assets
 
-- `index.html`: complete game with wheel-less car body and Techquity logo embedded.
+- `index.html`: game logic, menus, wheel-less car body and in-game Techquity logo.
+- `title-hero.webp`: generated bridge/river menu artwork (236 KB).
+- `techquity-logo.png`: original Techquity logo used by the title screen.
 - `car-body.png`: transparent wheel-less car body used by the game. The renderer adds two rotating wheels, aligned with the empty arches; there are no baked-in wheels underneath them.
 - `car.png`: earlier original sprite, kept as a source reference.
 - `bridge-parts.svg`: reusable road, reinforced road, wood and metal beams, rock anchors, hinge, counterweight, geared drive, bank, water and broken deck.
+
+Title artwork was generated with the built-in image-generation tool. Prompt: “A polished wide 16:9 landscape illustration, no text or logos. A small teal hatchback drives across a modest timber and steel triangular truss bridge over a calm turquoise river in a New Zealand hill landscape. Warm timber beams, cool grey steel joints, purple wildflowers and soft purple mountains, sunlight. Clean low-poly painterly game art. Bridge and car on the right; quiet pale sky and hillside on the left for HTML title and buttons. Side-on slightly elevated perspective, continuous roadway supported between banks. Techquity deep purple #5a108f as a subtle accent. No lettering, interfaces or watermark.” The original 1672 × 941 PNG was converted to WebP at quality 82.
 
 The wheel-less body was edited with the built-in image-generation tool, then trimmed and resized. Edit prompt: “Remove BOTH wheels completely, including every tyre, rim, hub and spoke. Leave clean empty transparent wheel arches at exactly the original wheel centres. Keep the teal body silhouette, windows, headlights, proportions, perspective and original body artwork unchanged. No new wheels, no ground or shadows, no logos or text. Preserve transparency. The game will draw separate rotating wheels inside these empty wheel arches.”
 
@@ -70,7 +83,7 @@ The wheel-less body was edited with the built-in image-generation tool, then tri
 
 Automated checks passed for reference designs in all nine missions, material unlock restrictions, the easier heavier-car mission, reinforced road reducing deflection while adding mass, scaled torque and counterweight calculations, learning-dialogue opening/closing/next flow, real car-load reactions at both rock anchors, failure of the all-wood final reference, success of the mixed-material reference within budget, upgrades, undo/redo, drag building, pause/edit and slope/lift animation consistency.
 
-The wheel-less sprite and composed canvas drawing were visually inspected. Full browser and mobile layout checks remain unavailable because this execution environment has no browser executable.
+The wheel-less sprite and composed canvas drawing were visually inspected. Automated checks also passed for all three expert reference designs and the crash lab: chapter counts, observation lock, far-half failure, splash, debrief and successful repair within budget.
 
 ## GitHub Pages and Google Sites
 
