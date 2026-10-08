@@ -5,6 +5,8 @@
 <title>Breadboard Continuity Lab | Techquity</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#fff;color:#374151;font:14px/1.45 system-ui,-apple-system,sans-serif}.lab{max-width:1120px;margin:auto;border:1px solid #e8e1ed;border-radius:16px;overflow:hidden}header{padding:18px 24px;border-bottom:1px solid #e8e1ed;display:flex;align-items:center;gap:24px}.brand-logo{display:block;width:190px;height:auto;flex:none}h1{font-size:23px;line-height:1.2;margin:0 0 6px;letter-spacing:-.5px}p{margin:0;color:#706679}.toolbar{display:flex;flex-wrap:wrap;gap:7px;align-items:center;padding:12px 20px;border-top:1px solid #e8e1ed;background:#faf8fc}button{font:inherit;border:1px solid #e8e1ed;background:white;color:#374151;border-radius:8px;padding:9px 12px;min-height:40px;cursor:pointer;white-space:nowrap}button:hover{background:#f2ebf8}button:focus-visible,input:focus-visible{outline:3px solid #b878e8;outline-offset:2px}button[aria-pressed=true]{background:#5a108f;border-color:#5a108f;color:white}button:disabled{opacity:.38;cursor:default}.danger{margin-left:auto}label{display:flex;align-items:center;gap:7px;padding:6px;color:#706679}input{accent-color:#5a108f;width:17px;height:17px}.workspace{background:white;overflow:auto}svg{display:block;width:100%;min-width:760px;touch-action:none;user-select:none}svg text{font-family:system-ui,sans-serif}.statusbar{min-height:43px;padding:10px 24px;color:#706679;border-top:1px solid #e8e1ed;font-size:13px}.footer{padding:0 24px 14px;color:#706679;font-size:12px}.hole{cursor:crosshair}.probe{cursor:grab}.probe:active{cursor:grabbing}.link-hit{cursor:pointer}.probe:focus-visible .handle{stroke:#b878e8;stroke-width:4}.hole:focus-visible circle{stroke:#b878e8;stroke-width:3}.wire-selected{stroke:#5a108f!important}[hidden]{display:none!important}@media(max-width:700px){.lab{border-radius:0;border-left:0;border-right:0}header{padding:16px;display:block}.brand-logo{width:165px;margin-bottom:14px}h1{font-size:21px}.toolbar{padding:10px 12px}.danger{margin-left:0}button{padding:8px 10px}.statusbar{padding:10px 16px}.footer{padding:0 16px 12px}}
+
+.lab{height:100dvh;display:flex;flex-direction:column}.lab>header,.toolbar,.statusbar,.footer{flex-shrink:0}.workspace{flex:1;min-height:0;overflow:hidden;display:flex;align-items:center;justify-content:center}.workspace svg{width:100%;height:100%;min-width:0}.lab:fullscreen{max-width:none;width:100%;height:100dvh;border:0;border-radius:0;background:#fff}#fullscreen{margin-left:auto}@media(max-height:650px){header{padding:8px 16px}.brand-logo{width:130px;margin-bottom:0}h1{font-size:18px}header p{font-size:12px}.toolbar{padding:6px 12px}button{padding:6px 10px;min-height:34px}.statusbar{padding:6px 16px;min-height:30px}.footer{padding-bottom:6px}}@media(max-width:700px){header{display:flex;gap:12px;padding:10px 12px}.brand-logo{width:110px;margin-bottom:0}h1{font-size:18px}header p{font-size:12px}.footer{display:none}}
 </style>
 </head>
 <body><main class="lab" id="breadboard-lab">
@@ -25,7 +27,7 @@
 </svg></div>
 <div class="toolbar" aria-label="Tools">
 <button data-tool="red" aria-pressed="true">Red probe</button><button data-tool="black" aria-pressed="false">Black probe</button><button data-tool="link" aria-pressed="false">Metal link</button>
-<button id="remove">Remove red probe</button><button id="sound" aria-pressed="false">Sound: off</button><label><input type="checkbox" id="reveal">Show connections</label><button id="reset" class="danger">Start again</button></div>
+<button id="remove">Remove red probe</button><button id="sound" aria-pressed="false">Sound: off</button><label><input type="checkbox" id="reveal">Show connections</label><button id="fullscreen" type="button" aria-pressed="false">Full screen</button><button id="reset" class="danger">Start again</button></div>
 <div class="statusbar" id="status" role="status" aria-live="polite"></div>
 <div class="footer">Keyboard: tab to a hole and press Enter; arrow keys move a focused probe. Ideal conductor model.</div>
 </main>
@@ -69,6 +71,19 @@ $('remove').addEventListener('click',()=>{if(selected!==null){const i=wires.find
 $('reset').addEventListener('click',()=>{wires.length=0;selected=null;start=null;probes.red={x:90,y:299,hole:'a1',present:true};probes.black={x:90,y:371,hole:'e1',present:true};$('reveal').checked=false;setTool('red')});
 $('sound').addEventListener('click',async()=>{sound=!sound;if(sound&&!audio){try{audio=new(window.AudioContext||window.webkitAudioContext)();osc=audio.createOscillator();gain=audio.createGain();osc.frequency.value=1700;gain.gain.value=0;osc.connect(gain);gain.connect(audio.destination);osc.start()}catch(e){sound=false;$('status').textContent='Audio unavailable; the display still shows continuity.'}}if(audio&&audio.state==='suspended')await audio.resume();$('sound').textContent='Sound: '+(sound?'on':'off');$('sound').setAttribute('aria-pressed',sound);tone(network().connected(probes.red.hole,probes.black.hole))});
 document.addEventListener('visibilitychange',()=>tone(!document.hidden&&network().connected(probes.red.hole,probes.black.hole)));
+const fullscreenButton=$('fullscreen');
+fullscreenButton.addEventListener('click',async()=>{
+ try{
+  if(document.fullscreenElement){await document.exitFullscreen();}
+  else if(root.requestFullscreen){await root.requestFullscreen();}
+  else{window.open(location.href,'_blank','noopener');}
+ }catch(error){window.open(location.href,'_blank','noopener');}
+});
+document.addEventListener('fullscreenchange',()=>{
+ const active=document.fullscreenElement===root;
+ fullscreenButton.textContent=active?'Exit full screen':'Full screen';
+ fullscreenButton.setAttribute('aria-pressed',String(active));
+});
 render();
 })();
 </script></body></html>
